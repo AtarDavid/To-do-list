@@ -4,14 +4,16 @@ import Help from "./Help";
 import NotFound from "./NotFound";
 import Home from "./Home";
 
-const Router = () => (
-    <BrowserRouter>
-        <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/help" component={Help} />
-            <Route component={NotFound} />
-        </Switch>
-    </BrowserRouter>
-);
-
-export default Router;
+export default class Router extends React.Component {
+    render() {
+        return (
+            <BrowserRouter>
+                <Switch>
+                    <Route exact path="/" render={(props) => <Home {...props} addToDo={this.props.addToDo} items={this.props.items} />} />
+                    <Route path="/help" component={Help} />
+                    <Route component={NotFound} />
+                </Switch>
+            </BrowserRouter>
+        )
+    }
+}

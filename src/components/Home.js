@@ -6,8 +6,8 @@ export default class Home extends Component {
     render() {
         return (
             <div>
-                <ToDoForm />
-                <ToDoList />
+                <ToDoForm addToDo={this.props.addToDo} />
+                <ToDoList items={this.props.items} />
             </div>
         )
     }
