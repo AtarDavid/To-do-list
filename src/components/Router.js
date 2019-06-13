@@ -9,7 +9,7 @@ export default class Router extends React.Component {
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/" render={(props) => <Home {...props} addToDo={this.props.addToDo} items={this.props.items} />} />
+                    <Route exact path="/" component={Home} />
                     <Route path="/help" component={Help} />
                     <Route component={NotFound} />
                 </Switch>
