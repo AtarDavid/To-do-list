@@ -3,15 +3,24 @@ import ToDoItem from "./ToDoItem";
 
 export default class ToDoList extends Component {
     render() {
-        console.log(Object.keys(this.props.items).length)
+        const { items, updateToDoText, toggleToDoDone
+            , removeToDo } = this.props;
         return (
-            (Object.keys(this.props.items).length > 0 &&
+            (Object.keys(items).length > 0 &&
                 <div className="todo-list">
-                    <ul className="todo-items">
-                        {Object.keys(this.props.items).map(uuid => (
-                            <ToDoItem key={`todo-item-${uuid}`} data={this.props.items[uuid]} />
-                        ))}
-                    </ul>
+                    <table className="todo-items table table-borderless">
+                        <tbody>
+                            {Object.keys(items).map(uuid => (
+                                <ToDoItem
+                                    key={`todo-item-${uuid}`}
+                                    data={items[uuid]}
+                                    updateToDoText={updateToDoText}
+                                    toggleToDoDone={toggleToDoDone}
+                                    removeToDo={removeToDo}
+                                />
+                            ))}
+                        </tbody>
+                    </table>
                 </div>)
             ||
             <div className="alert alert-info">
