@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ToDoForm from "./ToDoForm";
 import ToDoList from "./ToDoList";
+import ToDoFilter from "./ToDoFilter";
 import uuid from "uuid/v4";
 import Storage from "../modules/Storage"
 
@@ -15,7 +16,8 @@ export default class Home extends Component {
             this.state = JSON.parse(old);
         } else {
             this.state = {
-                toDoItems: {}
+                toDoItems: {},
+                filter: 'undone',
             };
             Storage.set(this.storageKey, JSON.stringify(this.state));
         }
@@ -24,6 +26,13 @@ export default class Home extends Component {
     componentDidUpdate() {
         Storage.set(this.storageKey, JSON.stringify(this.state));
     }
+
+    setFilter = filter => {
+        this.setState(state => {
+            state.filter = filter;
+            return state;
+        });
+    };
 
     addToDo = text => {
         const todo = {
@@ -65,8 +74,13 @@ export default class Home extends Component {
         return (
             <div>
                 <ToDoForm addToDo={this.addToDo} />
+                <ToDoFilter
+                    activeFilter={this.state.filter}
+                    setFilter={this.setFilter}
+                />
                 <ToDoList
                     items={this.state.toDoItems}
+                    filter={this.state.filter}
                     updateToDoText={this.updateToDoText}
                     toggleToDoDone={this.toggleToDoDone}
                     removeToDo={this.removeToDo}
