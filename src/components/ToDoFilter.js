@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { filters, setFilter } from '../actions/index';
 
-export default class ToDoFilter extends React.Component {
-    filters = ['all', 'undone', 'done'];
+class ToDoFilter extends React.Component {
 
     render() {
         return (
@@ -11,22 +12,34 @@ export default class ToDoFilter extends React.Component {
                     role="group"
                     aria-label="Set a filter to show items"
                 >
-                    {this.filters.map(filter => (
-                        <button
-                            type="button"
-                            className={`btn btn-light ${
-                                this.props.activeFilter === filter ? 'active' : ''
-                                }`}
-                            onClick={e => {
-                                this.props.setFilter(filter);
-                            }}
-                            key={filter}
-                        >
-                            {filter}
-                        </button>
-                    ))}
+                    {Object.keys(filters).map(filterKey => {
+                        const filter = filters[filterKey];
+                        return (
+                            <button
+                                type="button"
+                                className={`btn btn-light ${
+                                    this.props.filter === filter ? 'active' : ''
+                                    }`}
+                                onClick={e => {
+                                    this.props.setFilter(filter);
+                                }}
+                                key={filter}
+                            >
+                                {filter}
+                            </button>
+                        )
+                    })}
                 </div>
             </div>
         );
     }
 }
+
+export default connect(
+    state => ({
+        filter: state.filter,
+    }),
+    {
+        setFilter,
+    }
+)(ToDoFilter);
