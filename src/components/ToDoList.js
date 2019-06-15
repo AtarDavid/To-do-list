@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import ToDoItem from "./ToDoItem";
 
-export default class ToDoList extends Component {
+class ToDoList extends Component {
     filteredItems = () => {
         const filtered = [];
         const { items, filter } = this.props
@@ -22,8 +24,7 @@ export default class ToDoList extends Component {
     };
 
     render() {
-        const { items, updateToDoText, toggleToDoDone
-            , removeToDo } = this.props;
+        const { items } = this.props;
         return (
             (Object.keys(items).length > 0 &&
                 <div className="todo-list">
@@ -32,9 +33,6 @@ export default class ToDoList extends Component {
                             {this.filteredItems().map(item => (<ToDoItem
                                 key={`todo-item-${item.uuid}`}
                                 data={item}
-                                updateToDoText={updateToDoText}
-                                toggleToDoDone={toggleToDoDone}
-                                removeToDo={removeToDo}
                             />
                             ))}
                         </tbody>
@@ -47,3 +45,8 @@ export default class ToDoList extends Component {
         )
     }
 }
+
+export default connect(state => ({
+    items: state.toDoItems,
+    filter: state.filter,
+}))(ToDoList);

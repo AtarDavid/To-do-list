@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { updateToDoText, toggleToDo, removeToDo } from '../actions/index';
 
-export default class ToDoItem extends React.Component {
+class ToDoItem extends React.Component {
     handleInputKeyUp(e) {
         // Remove focus, when the [Enter] key is pressed
         if (e.keyCode === 13) {
@@ -9,8 +11,7 @@ export default class ToDoItem extends React.Component {
     }
 
     render() {
-        const { updateToDoText, toggleToDoDone
-            , removeToDo } = this.props;
+        const { updateToDoText, toggleToDo, removeToDo } = this.props
         const todo = this.props.data;
         return (
             <tr className="todo-item" data-id={todo.uuid}>
@@ -22,8 +23,9 @@ export default class ToDoItem extends React.Component {
                             id={`todo-done-${todo.uuid}`}
                             type="checkbox"
                             checked={todo.done}
-                            onChange={toggleToDoDone}
-                        />
+                            onChange={e => {
+                                toggleToDo(todo.uuid);
+                            }} />
                         <label
                             className="custom-control-label"
                             htmlFor={`todo-done-${todo.uuid}`}
@@ -55,3 +57,12 @@ export default class ToDoItem extends React.Component {
         );
     }
 }
+
+export default connect(
+    state => ({}),
+    {
+        updateToDoText,
+        toggleToDo,
+        removeToDo,
+    }
+)(ToDoItem);
