@@ -1,18 +1,14 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { addToDo } from '../actions/index';
 
-export default class ToDoForm extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+class ToDoForm extends React.Component {
 
     textInput = React.createRef();
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         const text = this.textInput.current.value.trim();
-        console.log(`Create new item: ${text}`);
         this.props.addToDo(text);
         e.currentTarget.reset();
     }
@@ -35,3 +31,10 @@ export default class ToDoForm extends React.Component {
         );
     }
 }
+
+export default connect(
+    state => ({}),
+    {
+        addToDo,
+    }
+)(ToDoForm);
